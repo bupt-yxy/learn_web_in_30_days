@@ -13,6 +13,7 @@
 <body>
 <div id="app">
 <!--    <el-button>{{ message }}</el-button>-->
+    <div>
     <el-form ref="form" :model="form" label-width="80px">
         <el-form-item label="活动名称">
             <el-input v-model="form.name"></el-input>
@@ -57,6 +58,25 @@
             <el-button>取消</el-button>
         </el-form-item>
     </el-form>
+    </div>
+    <hr>
+
+    <div style="margin-top: 20px">
+        <el-tag type="primary">待审批信息</el-tag>
+        <el-table border strip :data="historyInfos">
+            <el-table-column prop="name" label="活动名称"></el-table-column>
+            <el-table-column prop="region" label="活动区域"></el-table-column>
+            <el-table-column prop="type" label="活动性质"></el-table-column>
+            <el-table-column label="审批状态">
+                <template #default="scope">
+                    <el-tag type="success" v-if="scope.row.status==1">通过</el-tag>
+                    <el-tag type="danger" v-else-if="scope.row.status==2">拒绝</el-tag>
+                    <el-tag type="success" v-else>待审批</el-tag>
+                </template>
+            </el-table-column>
+        </el-table>
+    </div>
+
 </div>
 
 <script>
@@ -72,13 +92,14 @@
                     type: [],
                     resource: '',
                     desc: ''
-                }
+                },
+                historyInfos:[{name:'海底捞', region: 'Beijing', type: '美食/餐厅线上活动', status:1},
+                    {name:'迪士尼', region: 'Shanghai', type: '线下主题活动', status:null}]
             }
         },
         methods: {
             onSubmit () {
-                console.log('submit!');
-                console.log(this.form);
+                console.log('submit!')
             }
         }
     };
