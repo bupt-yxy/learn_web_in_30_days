@@ -19,7 +19,7 @@ public class Leetcode77 {
             result.add(new LinkedList<>(path));
             return;
         }
-        for (int i = start; i <= n; i++) {
+        for (int i = start; i <= n - (k - path.size()) + 1; i++) {
             path.addLast(i);
             backtrack(n, k, i+1);
             path.removeLast();
